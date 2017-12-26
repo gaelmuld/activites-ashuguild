@@ -1,9 +1,9 @@
 <section id="information">
     <h2>Choix des activités
     </h2>
-    <?php if(@$_SESSION['message']){ ?>
+    <?php if(isset($_SESSION['message'])){ ?>
     <h3 id='message'>
-        <?= $_SESSION['message']?>
+        <?= @$_SESSION['message']?>
     </h3>
     <?php } ?>
     <section class="selection">
