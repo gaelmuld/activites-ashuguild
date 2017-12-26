@@ -59,7 +59,7 @@
         <tbody>
             <?php if(@$participants){
             foreach($participants as $k=>$infoParticipant) { ?>
-            <tr>
+            <tr id="<?= $_SESSION['pseudo']?>">
                 <th scope="row">
                     <?= $infoParticipant['pseudo'] ?>
                 </th>
