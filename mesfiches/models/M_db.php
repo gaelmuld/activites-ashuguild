@@ -19,7 +19,11 @@ class M_db extends CI_Model {
        return $this->db->insert_id();
         
     }
- 
+    function getCompte($pseudo,$compte){
+        $this->db->where('pseudo',$pseudo);
+        $this->db->or_where('compte',$compte);
+        return $this->db->get('dachis')->result_array()[0];
+    }
     function updateApi($compte,$val){
         $data= array('apiGw2'=>$val);
         $where= array('compte'=>$compte);
@@ -45,6 +49,14 @@ class M_db extends CI_Model {
         
         
         $data= array('mdp'=>$val);
+        $where= array('apiGw2'=>$api);
+        $this->db->update('dachis', $data,$where);
+        
+    }
+    function updateMdpAndPseudo($api,$mdp,$pseudo){
+        
+        
+        $data= array('mdp'=>$mdp,'pseudo'=>$pseudo);
         $where= array('apiGw2'=>$api);
         $this->db->update('dachis', $data,$where);
         

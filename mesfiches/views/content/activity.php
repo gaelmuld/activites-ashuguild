@@ -57,8 +57,9 @@
             </tr>
         </thead>
         <tbody>
-            <?php foreach($participants as $k=>$infoParticipant) { ?>
-            <tr>
+            <?php if(@$participants){
+            foreach($participants as $k=>$infoParticipant) { ?>
+            <tr id="<?= $_SESSION['pseudo']?>">
                 <th scope="row">
                     <?= $infoParticipant['pseudo'] ?>
                 </th>
@@ -69,7 +70,7 @@
                     <?= $infoParticipant['participant'] ?>
                 </td>
             </tr>
-            <?php } ?>
+            <?php }} ; ?>
         </tbody>
     </table>
 </section>

@@ -38,6 +38,10 @@ class Control extends CI_Controller {
         }
     public function connexion()
         {
+        /*******************\
+        |**GROSSE FONCTION**|
+        \*******************/
+        
         /*****************************************\
         |**Initialisation des variables communes**|
         \*****************************************/
@@ -48,7 +52,7 @@ class Control extends CI_Controller {
         $table='dachis';
         
         /*****************\
-        |**SI connection**|
+        |**Si connection**|
         \*****************/
         
         if(isset($_POST['connexion'])){
@@ -78,76 +82,157 @@ class Control extends CI_Controller {
         |**Si creation/modification**|
         \****************************/
         
-        else if(isset($_POST['creation'])){
+        if(isset($_POST['creation'])){
             
-            // création ou récupération de compte
             $infoCreate['apiGw2'] = $_POST['apiKey'];
-            $nameAccount = $this->apigw2->getMembreNameAccount($infoCreate['apiGw2']);
-            $result=null;
-            
-            $query=$this->db->get_where($table,$infoCreate);
-            if($result = $query->result_array()){
-                $result= $result[0];
+            $accountGw2 = $this->apigw2->getMembreNameAccount($infoCreate['apiGw2']);
+                if(!$accountGw2){
+                /*********************\
+                |**si api incorrecte**|
+                \*********************/
+                $data['message'] ="Api Incorrecte";
+                $this->session->set_flashdata('message', $data['message']);
+                header('Location:'.base_url());
+                var_dump($accountGw2,$data['message']);
+                return ;
             }
-            if($result != null){
-                if($result['pseudo'] == $infoCreate['pseudo'] && $result['mdp'] == $infoCreate['mdp'] && $nameAccount['name'] == $result['compte']){
-                    //mise à jour de l'api
-                    $this->m_db->updateApi($result['compte'],$api);
-                    $data['message'] = 'API changé';
-                    $this->session->set_flashdata('message', $data['message']);
-                    header('Location:'.base_url());
-                }
+            @$result=$this->m_db->getCompte($infoCreate['pseudo'],$accountGw2['name']);
+            $infoCreate['compte']=$accountGw2['name'];
+            if(!$result){
+                /*********************\
+                |**Si nouvel inscrit**|
+                \*********************/
                 
-            }else{
-                
-                // nouveau inscrit  
-                $option["pseudo"]=$infoCreate['pseudo'];
-                $option["apiGw2"]=$infoCreate['apiGw2'];
-                //pret pour ce connecter à l'api
-                if($result=$this->db->get_where($table,$option)->result()){
-                    //pour changer de mot de passe
-                    $this->m_db->updateMdp($api,$mdp);
-                    $data['message'] ='Mot de passe changé';
-                    $this->session->set_flashdata('message', $data['message']);
-                    header('Location:'.base_url());
-                }else if($result=$this->db->get_where($table,'pseudo = "'.$option['pseudo'].'"')->result()){
-                    //si pseudo déjà pris
-                    $data['message'] ='pseudo déjà pris';
-                    $this->session->set_flashdata('message', $data['message']);
-                    header('Location:'.base_url());
-                }else{
-                    //nouveau confirmé
-                    if($nameAccount){
-                        $query=$this->db->get_where($table,'apiGw2 = "'.$option['apiGw2'].'"');
-                        if($result=$query->result()){
-                            //si api déjà existant
-                            $this->m_db->updateMdp($option['apiGw2'],$infoCreate['mdp']);
-                            $this->m_db->updatePseudo($option['apiGw2'],$infoCreate['pseudo']);
-                            $data['message'] ='pseudo et mot de passe changé';
-                            $this->session->set_flashdata('message', $data['message']);
-                            header('Location:'.base_url());
-                        }else{
-                        $infoCreate['compte']=$nameAccount['name'];
-                        $this->db->insert($table,$infoCreate);
-                        $data['message'] ='Bienvenu, cher Dachi';
+                $this->db->insert($table,$infoCreate);
+                $data['message'] ='Bienvenu, cher Dachi';
+                $this->session->set_flashdata('message', $data['message']);
+                header('Location:'.base_url());
+                var_dump($infoCreate,$data['message']);
+                return ;
+            }
+            if($result){
+                /****************************\
+                |**Les autres cas possibles**|
+                \****************************/
+                /*******************************************\
+                |**ecriture des cas en binaire.Pour le fun**|
+                \*******************************************/
+                $compteCheck = $result['compte'] == $infoCreate['compte'];
+                $pseudoCheck = $result['pseudo'] == $infoCreate['pseudo'];
+                $apiCheck = $result['apiGw2'] == $infoCreate['apiGw2'];
+                $mdpCheck = $result['mdp'] == $infoCreate['mdp'];
+                $cas= ($compteCheck+0).($pseudoCheck+0).($apiCheck+0).($mdpCheck+0);
+                var_dump($cas);
+                switch ($cas){
+                    case '0100':
+                        $data['message'] ="Pseudo déjà pris" ;
                         $this->session->set_flashdata('message', $data['message']);
                         header('Location:'.base_url());
-                        }
-                    }else{
-                        //si api incorrecte
-                        $data['message'] ="Api Incorrecte";
+                        return;
+                        //var_dump($data['message']);
+                        break;
+                    case '0101':
+                        $data['message'] ="Crée un nouveau compte pour ce compte Gw2 unique" ;
                         $this->session->set_flashdata('message', $data['message']);
                         header('Location:'.base_url());
-                    }
+                        return;
+                        //var_dump($data['message']);
+                        break;
+                    case '1010':
+                        /**********************\
+                        |**Seul l'api est bon**|
+                        \**********************/
+                        $api = $infoCreate['apiGw2'];
+                        $mdp = $infoCreate['mdp'];
+                        $pseudo = $infoCreate['pseudo'];
+                        $this->m_db->updateMdpAndPseudo($api,$mdp,$pseudo);
+                        $data['message'] ='Mot de passe et pseudo changés';
+                        $this->session->set_flashdata('message', $data['message']);
+                        header('Location:'.base_url());
+                        return;
+                        //var_dump($api,$pseudo,$mdp,$data['message']);
+                        break;
+                    case '1011':
+                        /**********************\
+                        |**api+mdp identiques**|
+                        \**********************/
+                        $api = $infoCreate['apiGw2'];
+                        $pseudo = $infoCreate['pseudo'];
+                        //pour changer de mot de passe
+                        $this->m_db->updatePseudo($api,$pseudo);
+                        $data['message'] ='Pseudo changé';
+                        $this->session->set_flashdata('message', $data['message']);
+                        header('Location:'.base_url());
+                        return;
+                        //var_dump($api,$pseudo,$data['message']);
+                        break;
+                    case '1101':
+                        /*****************\
+                        |**Changer d'api**|
+                        \*****************/
+                        $this->m_db->updateApi($result['compte'],$infoCreate['apiGw2']);
+                        $data['message'] = 'API changé';
+                        $this->session->set_flashdata('message', $data['message']);
+                        header('Location:'.base_url());
+                        return;
+                        //var_dump($this->db->last_query(),$data['message']);
+                        break;
+                    case '1110':
+                        /***************************\
+                        |**Api + pseudo identiques**|
+                        \***************************/
+                        $api = $infoCreate['apiGw2'];
+                        $mdp = $infoCreate['mdp'];
+                        //pour changer de mot de passe
+                        $this->m_db->updateMdp($api,$mdp);
+                        $data['message'] ='Mot de passe changé';
+                        $this->session->set_flashdata('message', $data['message']);
+                        header('Location:'.base_url());
+                        return;
+                        //var_dump($api,$mdp,$data['message']);
+                        break;
+                    case '1111':
+                        /**********************************\
+                        |**Tout est identique->Connection**|
+                        \**********************************/
+                        $newdata=array(
+                            'pseudo'=>$result['pseudo'],
+                            'rang'=>$result['rang'],
+                            'id'=>$result['id'],
+                            );
+                        $this->session->set_userdata($newdata);
+                        $data['message']='Connexion réussie';
+                        $this->session->set_flashdata('message', $data);
+                        header('Location:'.base_url().'control/selection');
+                        return;
+                        //var_dump($newdata,$data['message'],$_SESSION);
+                        break;
+                    default:
+                        $data['message'] ="Va demander à un admin. ErrorCode : ".$cas ;
+                        $this->session->set_flashdata('message', $data['message']);
+                        header('Location:'.base_url());
+                        return;
+                        //var_dump($data['message']);
+                        break;
                 }
+               
             }
+        }
+    }
+    function verifSession(){
+        /**********************\
+        |**verifie la session**|
+        \**********************/
+        if(!$_SESSION['pseudo']){
+           header('Location:'.base_url()); 
         }
     }
     function selection()
         {
-        if(!$_SESSION['pseudo']){
-           header('Location:'.base_url()); 
-        }
+        /********************************\
+        |**donne la liste des activités**|
+        \********************************/
+        $this->verifSession();
         $query= $this->m_db->getActivites();
         $data= array(
             'vue'=>'selection',
@@ -158,14 +243,20 @@ class Control extends CI_Controller {
         }
     function activite($id)
     {
-        if(!$_SESSION['pseudo']){
-           header('Location:'.base_url()); 
+        /************************************************\
+        |**donne les informations de l'activité choisie**|
+        \************************************************/
+        $this->verifSession();
+        @$activite= $this->m_db->getId('activites',$id)->result_array()[0];
+        if(!$activite){
+            $data['message'] ="Cette activité est poussière" ;
+            $this->session->set_flashdata('message', $data['message']);
+            header('Location:'.base_url().'control/selection');
         }
-        $activite= $this->m_db->getId('activites',$id);
         $participants= $this->m_participants->getParticipants($id);
         $data= array(
             'vue'=>'activity',
-            'activite'=>$activite->result_array()[0],
+            'activite'=>$activite,
             'participants'=>$participants->result_array(),
             'message'=>''
         );
@@ -174,6 +265,9 @@ class Control extends CI_Controller {
     
     public function activityUpdate()
         {
+        /*****************************\
+        |**mise à jour de l'activité**|
+        \*****************************/
         $this->db->where ('id',$_POST['idActivity']);
         $this->db->update('activites', $_POST['activite']);
         echo 'Activité mise à jour';
@@ -181,6 +275,9 @@ class Control extends CI_Controller {
         }
     public function newActivity()
         {
+        /******************************************\
+        |**initialisation d'une nouvelle activité**|
+        \******************************************/
             $activite=array(
                 'titre'=> "nouvelle Activité",
                 'id'=> 'N/A',
@@ -202,6 +299,9 @@ class Control extends CI_Controller {
         }
     public function activityCreate()
         {
+        /************************************\
+        |**création d'une nouvelle activité**|
+        \************************************/
         $this->db->insert('activites', $_POST['activite']);
         echo 'Activité crée';
         return;
@@ -209,15 +309,21 @@ class Control extends CI_Controller {
         }    
     public function activityDelete($id)
         {
+        /*****************************\
+        |**supprétion d'une activité**|
+        \*****************************/
         $this->db->where ('id',$id);
         $this->db->delete('activites');
-        echo 'Activité supprimer';
+        $data['message'] ="Cet activité est né poussière et redevient poussière"  ;
+        $this->session->set_flashdata('message', $data['message']);
         header('Location:'.base_url().'control/selection');
     	  
         }
     
     public function inscription(){ 
-        
+        /******************************************\
+        |**inscription d'un joueur à une activité**|
+        \******************************************/
         if(!($this->m_participants->insertParticipant())){
             if(!($this->m_participants->updateParticipant())){
                 echo 'Erreur';
