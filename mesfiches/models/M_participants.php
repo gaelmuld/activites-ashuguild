@@ -11,7 +11,7 @@ class M_participants extends CI_Model {
         FROM dachis
         INNER JOIN participants ON dachis.id =id_dachi 
         INNER JOIN activites ON id_activite = activites.id
-        WHERE id_activite = ".$id_activite."
+        WHERE id_activite = '".$id_activite."'
         ORDER BY participant DESC,pseudo ASC;
         ");
     }

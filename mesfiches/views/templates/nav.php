@@ -13,6 +13,7 @@
                         <a class="nav-link disabled" href="#">
                             <?= $_SESSION['pseudo'] ?>
                         </a>
+                        <input type="hidden" id="pseudoConnection" value="<?= $_SESSION['pseudo'] ?>">
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="<?= base_url().'control/disconnect' ?>">Se déconnecter</a>
