@@ -4,8 +4,6 @@ $('#participe').click(function () {
         id_activite: $('#idActivity').html()
 
     }
-    var compte = $("#pseudoConnection").val();
-    $("#" + compte + " td:last-child()").html("1")
     $.post('../inscription', send)
         .done(function (data) {
             $(".message-alert").html('Vous êtes inscrit');
@@ -23,8 +21,6 @@ $('#dontParticipe').click(function () {
         id_activite: $('#idActivity').html()
 
     }
-    var compte = $("#pseudoConnection").val();
-    $("#" + compte + " td:last-child()").html("0")
     $.post('../inscription', send)
         .done(function (data) {
             $(".message-alert").html('Vous n\'êtes pas inscrit');
