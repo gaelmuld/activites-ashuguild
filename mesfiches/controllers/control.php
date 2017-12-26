@@ -67,13 +67,13 @@ class Control extends CI_Controller {
                     'id'=>$result['id'],
                 );
                 $this->session->set_userdata($newdata);
-                $data['message']='Connexion réussie';
-                $this->session->set_flashdata('message', $data);
+                $message='Connexion réussie';
+                $this->session->set_flashdata('message', $message);
                 header('Location:'.base_url().'control/selection');
                 
             }else{
-                $data['message'] ='Mauvais pseudo/mot de passe';
-                $this->session->set_flashdata('message', $data['message']);
+                $message ='Mauvais pseudo/mot de passe';
+                $this->session->set_flashdata('message', $message);
                 header('Location:'.base_url());
             }
             
@@ -125,18 +125,18 @@ class Control extends CI_Controller {
                 var_dump($cas);
                 switch ($cas){
                     case '0100':
-                        $data['message'] ="Pseudo déjà pris" ;
-                        $this->session->set_flashdata('message', $data['message']);
+                        $message ="Pseudo déjà pris" ;
+                        $this->session->set_flashdata('message', $message);
                         header('Location:'.base_url());
                         return;
-                        //var_dump($data['message']);
+                        //var_dump($message);
                         break;
                     case '0101':
-                        $data['message'] ="Crée un nouveau compte pour ce compte Gw2 unique" ;
-                        $this->session->set_flashdata('message', $data['message']);
+                        $message ="Crée un nouveau compte pour ce compte Gw2 unique" ;
+                        $this->session->set_flashdata('message', $message);
                         header('Location:'.base_url());
                         return;
-                        //var_dump($data['message']);
+                        //var_dump($message);
                         break;
                     case '1010':
                         /**********************\
@@ -146,11 +146,11 @@ class Control extends CI_Controller {
                         $mdp = $infoCreate['mdp'];
                         $pseudo = $infoCreate['pseudo'];
                         $this->m_db->updateMdpAndPseudo($api,$mdp,$pseudo);
-                        $data['message'] ='Mot de passe et pseudo changés';
-                        $this->session->set_flashdata('message', $data['message']);
+                        $message ='Mot de passe et pseudo changés';
+                        $this->session->set_flashdata('message', $message);
                         header('Location:'.base_url());
                         return;
-                        //var_dump($api,$pseudo,$mdp,$data['message']);
+                        //var_dump($api,$pseudo,$mdp,$message);
                         break;
                     case '1011':
                         /**********************\
@@ -160,22 +160,22 @@ class Control extends CI_Controller {
                         $pseudo = $infoCreate['pseudo'];
                         //pour changer de mot de passe
                         $this->m_db->updatePseudo($api,$pseudo);
-                        $data['message'] ='Pseudo changé';
-                        $this->session->set_flashdata('message', $data['message']);
+                        $message ='Pseudo changé';
+                        $this->session->set_flashdata('message', $message);
                         header('Location:'.base_url());
                         return;
-                        //var_dump($api,$pseudo,$data['message']);
+                        //var_dump($api,$pseudo,$message);
                         break;
                     case '1101':
                         /*****************\
                         |**Changer d'api**|
                         \*****************/
                         $this->m_db->updateApi($result['compte'],$infoCreate['apiGw2']);
-                        $data['message'] = 'API changé';
-                        $this->session->set_flashdata('message', $data['message']);
+                        $message = 'API changé';
+                        $this->session->set_flashdata('message', $message);
                         header('Location:'.base_url());
                         return;
-                        //var_dump($this->db->last_query(),$data['message']);
+                        //var_dump($this->db->last_query(),$message);
                         break;
                     case '1110':
                         /***************************\
@@ -185,11 +185,11 @@ class Control extends CI_Controller {
                         $mdp = $infoCreate['mdp'];
                         //pour changer de mot de passe
                         $this->m_db->updateMdp($api,$mdp);
-                        $data['message'] ='Mot de passe changé';
-                        $this->session->set_flashdata('message', $data['message']);
+                        $message ='Mot de passe changé';
+                        $this->session->set_flashdata('message', $message);
                         header('Location:'.base_url());
                         return;
-                        //var_dump($api,$mdp,$data['message']);
+                        //var_dump($api,$mdp,$message);
                         break;
                     case '1111':
                         /**********************************\
@@ -201,15 +201,15 @@ class Control extends CI_Controller {
                             'id'=>$result['id'],
                             );
                         $this->session->set_userdata($newdata);
-                        $data['message']='Connexion réussie';
-                        $this->session->set_flashdata('message', $data);
+                        $message='Connexion réussie';
+                        $this->session->set_flashdata('message', $message);
                         header('Location:'.base_url().'control/selection');
                         return;
-                        //var_dump($newdata,$data['message'],$_SESSION);
+                        //var_dump($newdata,$message,$_SESSION);
                         break;
                     default:
-                        $data['message'] ="Va demander à un admin. ErrorCode : ".$cas ;
-                        $this->session->set_flashdata('message', $data['message']);
+                        $message ="Va demander à un admin. ErrorCode : ".$cas ;
+                        $this->session->set_flashdata('message', $message);
                         header('Location:'.base_url());
                         return;
                         //var_dump($data['message']);
