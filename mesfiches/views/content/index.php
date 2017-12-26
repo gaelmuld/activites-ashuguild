@@ -42,7 +42,7 @@
     <?= (isset($message))?$message:''; ?>
 </h2>
 <script>
-    $('#message').delay(1200).fadeOut(1300);
+    $('#message').delay(1500).fadeOut(1300);
     $('#newForm').hide();
     $('.switchInscription').click(function() {
         $('#newForm').toggle();
