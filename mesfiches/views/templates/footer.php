@@ -1,4 +1,4 @@
-<?php if(@$_SESSION['rang']=='admin'){ ?>
+<?php if(@$_SESSION['rang']=='admin' || @$_SESSION['rang']=='organisateur' ){ ?>
 
 <script src='<?= js_url("gestion") ?>'></script>
 

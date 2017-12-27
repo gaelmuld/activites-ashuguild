@@ -314,8 +314,8 @@ class Control extends CI_Controller {
         \*****************************/
         $this->db->where ('id',$id);
         $this->db->delete('activites');
-        $data['message'] ="Cet activité est né poussière et redevient poussière"  ;
-        $this->session->set_flashdata('message', $data['message']);
+        $message ="Cet activité est né poussière et redevient poussière"  ;
+        $this->session->set_flashdata('message', $message);
         header('Location:'.base_url().'control/selection');
     	  
         }
@@ -336,4 +336,33 @@ class Control extends CI_Controller {
         echo 'Inscription du dachi ajouté';
         return;
     }
+    
+        function gestion()
+    {
+        /************************************************\
+        |**donne les informations de l'activité choisie**|
+        \************************************************/
+        $this->verifSession();
+            if($_SESSION['rang'] != 'admin'){
+                $message ="Cet section n'est pas accessible"  ;
+                $this->session->set_flashdata('message', $message);
+                header('Location:'.base_url().'control/selection');  
+            }
+        $joueurs= $this->db->get('dachis')->result_array();
+        $data= array(
+            'vue'=>'gestion',
+            'joueurs'=>$joueurs,
+            'message'=>''
+        );
+        $this->load->view('templates/template',$data);
+        }
+    public function gestionAction()
+        {
+        $this->m_db->updateRang($_POST['id'],$_POST['rang']);
+        $message ="Modification effectués"  ;
+        $this->session->set_flashdata('message', $message);
+        header('Location:'.base_url().'control/selection');
+        
+        }
+    
 }

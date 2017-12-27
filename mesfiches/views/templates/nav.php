@@ -15,6 +15,11 @@
                         </a>
                         <input type="hidden" id="pseudoConnection" value="<?= $_SESSION['pseudo'] ?>">
                     </li>
+                    <?php if($_SESSION['rang']=='admin'){ ?>
+                    <li class="nav-item">
+                        <a class="nav-link" href="<?= base_url().'control/gestion' ?>">gestion</a>
+                    </li>
+                    <?php } ?>
                     <li class="nav-item">
                         <a class="nav-link" href="<?= base_url().'control/disconnect' ?>">Se déconnecter</a>
                     </li>
