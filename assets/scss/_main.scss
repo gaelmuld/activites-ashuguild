@@ -266,7 +266,10 @@ body {
                 &:nth-child(even) {
                     flex: 2 2 200px;
                 }
-                &.created h5 {
+                &.created h5:before {
+                    content: "my";
+                    font-size: 0.4em;
+                    vertical-align: top;
                     color: $green;
                 }
 
