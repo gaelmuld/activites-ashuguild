@@ -1,16 +1,17 @@
+<?php $canAdmin = $_SESSION['rang']>3 || ($_SESSION['rang']>2 && $activite['createur']==$_SESSION['id']); ?>
 <section id="information">
     <h2>Activité mensuelle en cours :
         <span class="normal ed" id="titleActivity"><?= $activite['titre'] ?></span>
     </h2>
     <div>activité n°:<span id="idActivity"><?=$activite['id'] ?></span></div>
-    <?php if($_SESSION['rang']=='admin'){ ?>
+    <?php if($canAdmin){ ?>
     <span class="btnAct">lancement le<input type="date" id='dateStart' value='<?= $activite['dateDebut'] ?>'> - Jusqu'au <input type="date" id='dateEnd' value='<?= $activite['dateFin'] ?>'></span>
     <?php } ?>
     <div class="description">
         <h4>
             <p>Description</p>
         </h4>
-        <?php if($_SESSION['rang']=='admin'){ ?>
+        <?php if($canAdmin){ ?>
         <span class="btnAct">source de l'image : <input type="text" id="imgActivity" value="<?= $activite['imgDescription'] ?>"></span>
         <?php } ?>
         <a href="<?= $activite['imgDescription'] ?>" target="_blank"><img class="img-thumbnail rounded float-l" width='300' height='250' src="<?= $activite['imgDescription'] ?>" id="imgActivityResult"></a>

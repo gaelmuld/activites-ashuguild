@@ -40,11 +40,11 @@ body {
             color: #880000;
             z-index: 2;
         }
-        &.success{
+        &.success {
             background-color: white;
             color: #008810;
             z-index: 2;
-            
+
         }
     }
     section {
@@ -265,6 +265,12 @@ body {
                 }
                 &:nth-child(even) {
                     flex: 2 2 200px;
+                }
+                &.created h5:before {
+                    content: "my";
+                    font-size: 0.4em;
+                    vertical-align: top;
+                    color: $green;
                 }
 
             }

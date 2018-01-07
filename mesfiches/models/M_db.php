@@ -7,7 +7,7 @@ class M_db extends CI_Model {
             parent::__construct();
     }
     function getActivites(){
-        return $this->db->query("SELECT id,titre,imgDescription,dateFin FROM activites ORDER BY dateDebut DESC");
+        return $this->db->query("SELECT id,titre,imgDescription,dateFin,createur FROM activites ORDER BY dateDebut DESC");
     }
 
     function getId($table,$id){
@@ -60,5 +60,11 @@ class M_db extends CI_Model {
         $where= array('apiGw2'=>$api);
         $this->db->update('dachis', $data,$where);
         
+    }
+    function updateRang($ids,$rang){
+        foreach($ids as $k=>$id){
+            $query='UPDATE dachis SET rang = "'.$rang[$k].'" WHERE id = '.$id.' ; ';
+            $this->db->query($query);
+        }
     }
 }
