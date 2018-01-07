@@ -346,6 +346,7 @@ class Control extends CI_Controller {
                 $this->session->set_flashdata('message', $message);
                 header('Location:'.base_url().'control/selection');  
             }
+        $this->db->order_by('rang','DESC');
         $joueurs= $this->db->get('dachis')->result_array();
         $data= array(
             'vue'=>'gestion',
