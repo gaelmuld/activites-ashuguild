@@ -7,7 +7,7 @@ class M_db extends CI_Model {
             parent::__construct();
     }
     function getActivites(){
-        return $this->db->query("SELECT id,titre,imgDescription,dateFin FROM activites ORDER BY dateDebut DESC");
+        return $this->db->query("SELECT id,titre,imgDescription,dateFin,createur FROM activites ORDER BY dateDebut DESC");
     }
 
     function getId($table,$id){

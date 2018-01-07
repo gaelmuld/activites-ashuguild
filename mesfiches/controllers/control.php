@@ -93,7 +93,6 @@ class Control extends CI_Controller {
                 $data['message'] ="Api Incorrecte";
                 $this->session->set_flashdata('message', $data['message']);
                 header('Location:'.base_url());
-                var_dump($accountGw2,$data['message']);
                 return ;
             }
             @$result=$this->m_db->getCompte($infoCreate['pseudo'],$accountGw2['name']);
@@ -107,7 +106,6 @@ class Control extends CI_Controller {
                 $data['message'] ='Bienvenu, cher Dachi';
                 $this->session->set_flashdata('message', $data['message']);
                 header('Location:'.base_url());
-                var_dump($infoCreate,$data['message']);
                 return ;
             }
             if($result){
@@ -122,7 +120,6 @@ class Control extends CI_Controller {
                 $apiCheck = $result['apiGw2'] == $infoCreate['apiGw2'];
                 $mdpCheck = $result['mdp'] == $infoCreate['mdp'];
                 $cas= ($compteCheck+0).($pseudoCheck+0).($apiCheck+0).($mdpCheck+0);
-                var_dump($cas);
                 switch ($cas){
                     case '0100':
                         $message ="Pseudo déjà pris" ;
@@ -339,11 +336,12 @@ class Control extends CI_Controller {
     
         function gestion()
     {
+        $this->load->model('M_dachis');
         /************************************************\
         |**donne les informations de l'activité choisie**|
         \************************************************/
         $this->verifSession();
-            if($_SESSION['rang'] != 'admin'){
+            if($_SESSION['rang'] <= 2){
                 $message ="Cet section n'est pas accessible"  ;
                 $this->session->set_flashdata('message', $message);
                 header('Location:'.base_url().'control/selection');  

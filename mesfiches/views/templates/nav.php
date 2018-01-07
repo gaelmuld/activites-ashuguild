@@ -15,10 +15,13 @@
                         </a>
                         <input type="hidden" id="pseudoConnection" value="<?= $_SESSION['pseudo'] ?>">
                     </li>
-                    <?php if($_SESSION['rang']=='admin'){ ?>
+
+                    <?php if($_SESSION['rang']>2)// Pour l'administration des personnes. Acces:[Superviseur/organisateur/administrateur]
+                    { ?>
                     <li class="nav-item">
                         <a class="nav-link" href="<?= base_url().'control/gestion' ?>">gestion</a>
                     </li>
+
                     <?php } ?>
                     <li class="nav-item">
                         <a class="nav-link" href="<?= base_url().'control/disconnect' ?>">Se déconnecter</a>
@@ -27,7 +30,7 @@
             </div>
             <div class="gestion navbar-brand">
 
-                <?php $this->load->view('templates/administration'); ?>
+                <?php $this->load->view('templates/activiteGestion'); ?>
 
             </div>
         </nav>

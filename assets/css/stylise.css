@@ -226,6 +226,8 @@ body section section.selection {
       opacity: 0.1; }
     body section section.selection .overview:nth-child(even) {
       flex: 2 2 200px; }
+    body section section.selection .overview.created h5 {
+      color: #a9f792; }
 body section#participants {
   margin-bottom: 130px; }
 body section form {

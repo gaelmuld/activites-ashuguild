@@ -1,4 +1,4 @@
-<?php if(@$_SESSION['rang']=='admin' || @$_SESSION['rang']=='organisateur' ){ ?>
+<?php if((@$_SESSION['rang']>3 || @$activite['createur'] === @$_SESSION['id'] && @$_SESSION['rang']>2) ){ ?>
 
 <script src='<?= js_url("gestion") ?>'></script>
 

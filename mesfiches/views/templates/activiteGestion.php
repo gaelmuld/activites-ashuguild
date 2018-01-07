@@ -1,4 +1,4 @@
-<?php if($_SESSION['rang']=='admin' || $_SESSION['rang']=='organisateur'){ ?>
+<?php if($_SESSION['rang']>3 || @$activite['createur'] === $_SESSION['id'] && $_SESSION['rang']>2){ ?>
 <div class="btnMod">
     <?php if($vue =='selection')  {?>
 
@@ -7,12 +7,9 @@
     <?php } if($vue =='activity') {?>
 
     <button class="btn btn-info" id='btnModif' value='modif'>Modifier</button>
-
-    <?php  if($_SESSION['rang']=='admin') {?>
-
     <a href="<?=base_url().'control/activityDelete/'.$activite['id'] ?>" class="btn btn-danger" id='btnModif' value='modif'>Supprimer</a>
 
-    <?php }} ?>
+    <?php } ?>
 </div>
 <div class="btnAct">
     <button class="btn btn-info" id='btnValid' value='valider'>Valider</button>

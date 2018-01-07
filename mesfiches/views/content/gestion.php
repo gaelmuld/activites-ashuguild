@@ -1,4 +1,3 @@
-<?php var_dump($_POST); ?>
 <section id="ListeJoueurs">
     <h3>Les Dachis</h3>
     <form action="./gestionAction" method="post">
@@ -11,8 +10,7 @@
                 </tr>
             </thead>
             <tbody>
-                <?php if(@$joueurs){
-            foreach($joueurs as $k=>$infoJoueur) { ?>
+                <?php foreach($joueurs as $k=>$infoJoueur) { ?>
                 <tr>
                     <input type="hidden" value="<?= $infoJoueur['id'] ?>" name="id[]">
                     <th scope="row" width="48%">
@@ -22,16 +20,21 @@
                         <?= $infoJoueur['compte'] ?>
                     </td>
                     <td>
+                        <?php if($infoJoueur['rang'] < $_SESSION['rang']){ ?>
                         <select name="rang[]" id="">
-                            <option value="<?= $infoJoueur['rang'] ?>"><?= $infoJoueur['rang'] ?></option>
-                            <option value="" disabled>------</option>
-                            <option value="admin">admin</option>
-                            <option value="organisateur">organisateur</option>
-                            <option value="participant">participant</option>
+                            <?php for($i=1;$i<=$_SESSION['rang'];$i++){?>
+                            <option value="<?= $i ?>" 
+                            <?= ($infoJoueur['rang']==$i)?'selected':''; ?>
+                            ><?= $this->M_dachis->getRank($i) ?></option>
+                            <?php } ?>
                        </select>
+                        <?php }else{ 
+                            echo $this->M_dachis->getRank($infoJoueur['rang']); ?>
+                        <input type="hidden" value="<?= $infoJoueur['rang'] ?>" name="rang[]">
+                        <?php } ?>
                     </td>
                 </tr>
-                <?php }} ; ?>
+                <?php }; ?>
 
             </tbody>
         </table>
