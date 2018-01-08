@@ -115,7 +115,8 @@ function registreActivite(newActivity) {
         regles: $('#ruleActivity').html(),
         duree: $('#timeActivity').html(),
         prerequis: $('#requestActivity').html(),
-        type: "1"
+        type: "1",
+        createur: $('#createurId').val()
     };
 
     var toSend = {

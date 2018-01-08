@@ -299,6 +299,7 @@ class Control extends CI_Controller {
         /************************************\
         |**création d'une nouvelle activité**|
         \************************************/
+        var_dump($_POST);
         $this->db->insert('activites', $_POST['activite']);
         echo 'Activité crée';
         return;
