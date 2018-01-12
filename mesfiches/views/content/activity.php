@@ -7,7 +7,7 @@
     <?php if($canAdmin){ ?>
     <span class="btnAct">lancement le<input type="date" id='dateStart' value='<?= $activite['dateDebut'] ?>'> - Jusqu'au <input type="date" id='dateEnd' value='<?= $activite['dateFin'] ?>'></span>
     <?php } ?>
-    <input type="hidden" id="createurId" value="<?=(!isset($activite['createur']))?$_SESSION['id']:''; ?>">
+    <input type="hidden" id="createurId" value="<?=(!isset($activite['createur']))?$_SESSION['id']:$activite['createur']; ?>">
     <div class="description">
         <h4>
             <p>Description</p>
