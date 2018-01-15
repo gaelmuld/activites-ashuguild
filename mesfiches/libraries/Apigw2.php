@@ -33,7 +33,7 @@ class Apigw2{
     \***********************/
     
     public function getMembresGuild(){
-        $url='https://api.guildwars2.com/v2/guild/'.$this->apiGuilde.'/members'.$this->apiMaitre();
+        $url='https://api.guildwars2.com/v2/guild/'.$this->apiGuild.'/members'.$this->apiMaitre();
         return $this->getResult($url); 
         
     }

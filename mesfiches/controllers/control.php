@@ -38,6 +38,7 @@ class Control extends CI_Controller {
         }
     public function connexion()
         {
+        $this->load->model('M_dachis');
         /*******************\
         |**GROSSE FONCTION**|
         \*******************/
@@ -63,8 +64,9 @@ class Control extends CI_Controller {
                 $result=$result[0];
                 $newdata=array(
                     'pseudo'=>$result['pseudo'],
-                    'rang'=>$result['rang'],
+                    'rangId'=>$result['rangId'],
                     'id'=>$result['id'],
+                    'rang'=>$this->M_dachis->getRank($result['rangId'])['niveau']
                 );
                 $this->session->set_userdata($newdata);
                 $message='Connexion réussie';
@@ -194,8 +196,9 @@ class Control extends CI_Controller {
                         \**********************************/
                         $newdata=array(
                             'pseudo'=>$result['pseudo'],
-                            'rang'=>$result['rang'],
+                            'rangId'=>$result['rangId'],
                             'id'=>$result['id'],
+                            'rang'=>$this->m_dachis->getRank($result['rangId'])['niveau']
                             );
                         $this->session->set_userdata($newdata);
                         $message='Connexion réussie';
@@ -220,7 +223,7 @@ class Control extends CI_Controller {
         /**********************\
         |**verifie la session**|
         \**********************/
-        if(!$_SESSION['pseudo']){
+        if(!$_SESSION['rang']){
            header('Location:'.base_url()); 
         }
     }
@@ -244,6 +247,7 @@ class Control extends CI_Controller {
         |**donne les informations de l'activité choisie**|
         \************************************************/
         $this->verifSession();
+        $this->load->model('M_dachis');
         @$activite= $this->m_db->getId('activites',$id)->result_array()[0];
         if(!$activite){
             $data['message'] ="Cette activité est poussière" ;
@@ -338,17 +342,52 @@ class Control extends CI_Controller {
         function gestion()
     {
         $this->load->model('M_dachis');
-        /************************************************\
-        |**donne les informations de l'activité choisie**|
-        \************************************************/
+        /*************************************\
+        |**donne les informations des dachis**|
+        \*************************************/
         $this->verifSession();
-            if($_SESSION['rang'] <= 2){
+            if($_SESSION['rang'] == 0){
                 $message ="Cet section n'est pas accessible"  ;
                 $this->session->set_flashdata('message', $message);
                 header('Location:'.base_url().'control/selection');  
             }
+    
+        $membres = $this->apigw2->getMembresGuild();
+        
         $this->db->order_by('rang','DESC');
-        $joueurs= $this->db->get('dachis')->result_array();
+        $joueurs= $this->M_dachis->getDachis();
+        $countActivites= $this->M_dachis->getCreationCount();
+        $countParticipations= $this->M_dachis->getParticipationCount();
+        foreach($countActivites as $countAct){
+            $countActs[$countAct['id']]=$countAct['nbCreation'];
+        }            
+            
+        foreach($countParticipations as $countPart){   
+            $countParts[$countPart['id']][$countPart['participe']]=0+$countPart['nbParticipe'];
+        } 
+             
+        foreach($countActivites as $countAct){
+            $countActs[$countAct['id']]=$countAct['nbCreation'];
+        }
+        foreach($joueurs as $k=>$joueur){
+            foreach($membres as $member){
+                if($joueur['compte'] == $member['name']){
+                    $joueurs[$k]['joined']=date('d/m/Y',strtotime($member['joined']));
+                    $joueurs[$k]['rankGuild']=$member['rank'];
+                    break;
+                }
+            }
+            $joueurs[$k]['countCreaAct']=$countActs[$joueur['id']];
+            if(isset($countParts[$joueur['id']])){
+                $joueurs[$k]['countParticipation']=@$countParts[$joueur['id']];
+            }else{
+                $joueurs[$k]['countParticipation']=array(
+                '0'=>0,
+                '1'=>0
+                );
+            }
+        }
+        
         $data= array(
             'vue'=>'gestion',
             'joueurs'=>$joueurs,
@@ -361,7 +400,7 @@ class Control extends CI_Controller {
         $this->m_db->updateRang($_POST['id'],$_POST['rang']);
         $message ="Modification effectués"  ;
         $this->session->set_flashdata('message', $message);
-        header('Location:'.base_url().'control/selection');
+        header('Location:'.base_url().'control/gestion');
         
         }
     

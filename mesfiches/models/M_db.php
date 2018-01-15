@@ -61,10 +61,9 @@ class M_db extends CI_Model {
         $this->db->update('dachis', $data,$where);
         
     }
-    function updateRang($ids,$rang){
-        foreach($ids as $k=>$id){
-            $query='UPDATE dachis SET rang = "'.$rang[$k].'" WHERE id = '.$id.' ; ';
+    function updateRang($id,$rang){
+        var_dump($id,$rang);
+            $query='UPDATE dachis SET rangId = "'.$rang.'" WHERE id = '.$id.' ; ';
             $this->db->query($query);
-        }
     }
 }
