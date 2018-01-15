@@ -137,3 +137,9 @@ function registreActivite(newActivity) {
             });
     }
 }
+
+function gestionInfo(id) {
+    $(".tableInfo").addClass('d-none');
+    $("#info-" + id).removeClass('d-none');
+    console.log($("#info-" + id));
+}

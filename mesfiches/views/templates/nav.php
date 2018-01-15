@@ -16,10 +16,10 @@
                         <input type="hidden" id="pseudoConnection" value="<?= $_SESSION['pseudo'] ?>">
                     </li>
 
-                    <?php if($_SESSION['rang']>2)// Pour l'administration des personnes. Acces:[Superviseur/organisateur/administrateur]
+                    <?php if($_SESSION['rang'])// Pour l'administration des personnes. Acces:[Superviseur/organisateur/administrateur]
                     { ?>
                     <li class="nav-item">
-                        <a class="nav-link" href="<?= base_url().'control/gestion' ?>">gestion</a>
+                        <a class="nav-link" href="<?= base_url().'control/gestion' ?>">Les dachis</a>
                     </li>
 
                     <?php } ?>
