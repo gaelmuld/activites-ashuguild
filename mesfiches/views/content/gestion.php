@@ -57,7 +57,7 @@ function colorSwitch($switch){
                              </select>
                             <?php }else{ 
                             ?>
-                            <input style="color:<?= colorSwitch($infoJoueur['niveau']) ?>" type="text" disabled name="rang" value="<?=$this->M_dachis->getRank($infoJoueur['niveau'])['nom']?>" id="rang" class="form-control">
+                            <input style="color:<?= colorSwitch($infoJoueur['niveau']) ?>" type="text" disabled name="rang" value="<?=$this->M_dachis->getRank($infoJoueur['rangId'])['nom']?>" id="rang" class="form-control">
                             <?php } ?>
                         </div>
                         <div class="col-form-label col-lg-3 col-4">Rang GW2 : </div>
@@ -68,11 +68,13 @@ function colorSwitch($switch){
                     <div class="form-group row">
                         <div class="col-form-label col-lg-3 col-4"># de participation</div>
                         <div class="col-lg-3 col-8 col-form-label">
-                            <?=$infoJoueur['countParticipation'][1] ?>
+                            <?= (isset($infoJoueur['countParticipation'][1]))?
+                $infoJoueur['countParticipation'][1]:'0' ?>
                         </div>
                         <div class="col-form-label col-lg-3 col-4"># d'activité décliné</div>
                         <div class="col-lg-3 col-8 col-form-label">
-                            <?=$infoJoueur['countParticipation'][0] ?>
+                            <?= (isset($infoJoueur['countParticipation'][0]))?
+                $infoJoueur['countParticipation'][0]:'0' ?>
                         </div>
                     </div>
                     <div class="form-group row">

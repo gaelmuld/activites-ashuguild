@@ -378,13 +378,12 @@ class Control extends CI_Controller {
                 }
             }
             $joueurs[$k]['countCreaAct']=$countActs[$joueur['id']];
-            if(isset($countParts[$joueur['id']])){
-                $joueurs[$k]['countParticipation']=@$countParts[$joueur['id']];
-            }else{
-                $joueurs[$k]['countParticipation']=array(
+            $joueurs[$k]['countParticipation']=array(
                 '0'=>0,
                 '1'=>0
                 );
+            if(isset($countParts[$joueur['id']])){
+                $joueurs[$k]['countParticipation']=$countParts[$joueur['id']];
             }
         }
         

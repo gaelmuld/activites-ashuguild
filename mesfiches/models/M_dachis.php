@@ -8,7 +8,6 @@ class M_dachis extends CI_Model {
     }
     function getRank($id){
         return $this->db->query("SELECT * FROM rangs WHERE id = ".$id)->result_array()[0];
-        
     }
     
     function getDachis(){
