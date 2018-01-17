@@ -111,6 +111,12 @@ body {
                     clear: both;
                 }
             }
+            @media screen and (max-width:640px) {
+                img.img-thumbnail {
+                    width: 100%;
+                    max-width: 640px;
+                }
+            }
             img {
                 margin: 5px 20px 0 0;
                 flex: 1 1 360px;

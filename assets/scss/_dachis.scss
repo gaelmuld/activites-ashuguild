@@ -1,0 +1,32 @@
+section#ListeJoueurs {
+    .panelJoueur {
+        @media screen and (max-width: 768px) {
+
+            height: 180px;
+            overflow: hidden;
+            overflow-y: scroll;
+            box-shadow: 0 3px 6px -2px lighten($grey, 20%);
+        }
+        .list-group-item-action {
+            div:first-of-type {
+                padding-left: 20px;
+                text-align: left;
+                width: 60%;
+                display: inline-block;
+                overflow: hidden;
+                flex-wrap: nowrap;
+            }
+            div:last-of-type {
+                opacity: 0;
+                text-align: right;
+                position: relative;
+                left: 15%;
+                width: 15%;
+                display: inline-block;
+            }
+            &:hover div:last-of-type {
+                opacity: 1;
+            }
+        }
+    }
+}

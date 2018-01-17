@@ -15,7 +15,7 @@
         <?php if($canAdmin){ ?>
         <span class="btnAct">source de l'image : <input type="text" id="imgActivity" value="<?= $activite['imgDescription'] ?>"></span>
         <?php } ?>
-        <a href="<?= $activite['imgDescription'] ?>" target="_blank"><img class="img-thumbnail rounded float-l" width='300' height='250' src="<?= $activite['imgDescription'] ?>" id="imgActivityResult"></a>
+        <a href="<?= $activite['imgDescription'] ?>" target="_blank"><img class="img-thumbnail rounded float-l"  src="<?= $activite['imgDescription'] ?>" id="imgActivityResult"></a>
         <p class="ed" id="descriptionActivity">
             <?= $activite['description'] ?>
         </p>

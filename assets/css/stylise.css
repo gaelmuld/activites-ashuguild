@@ -79,6 +79,10 @@ body section .description {
       visibility: hidden;
       opacity: 0;
       clear: both; }
+  @media screen and (max-width: 640px) {
+    body section .description img.img-thumbnail {
+      width: 100%;
+      max-width: 640px; } }
   body section .description img {
     margin: 5px 20px 0 0;
     flex: 1 1 360px;
@@ -258,5 +262,28 @@ body #action {
     box-shadow: 2px 2px 3px #212121; }
     body #action button:active {
       box-shadow: -1px 0px 3px #212121; }
+
+@media screen and (max-width: 768px) {
+  section#ListeJoueurs .panelJoueur {
+    height: 180px;
+    overflow: hidden;
+    overflow-y: scroll;
+    box-shadow: 0 3px 6px -2px #bcbcbc; } }
+section#ListeJoueurs .panelJoueur .list-group-item-action div:first-of-type {
+  padding-left: 20px;
+  text-align: left;
+  width: 60%;
+  display: inline-block;
+  overflow: hidden;
+  flex-wrap: nowrap; }
+section#ListeJoueurs .panelJoueur .list-group-item-action div:last-of-type {
+  opacity: 0;
+  text-align: right;
+  position: relative;
+  left: 15%;
+  width: 15%;
+  display: inline-block; }
+section#ListeJoueurs .panelJoueur .list-group-item-action:hover div:last-of-type {
+  opacity: 1; }
 
 /*# sourceMappingURL=stylise.css.map */
