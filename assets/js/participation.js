@@ -1,4 +1,4 @@
-$('#participe').click(function () {
+$('.participe').click(function () {
     var send = {
         participant: 1,
         id_activite: $('#idActivity').html()
@@ -15,7 +15,7 @@ $('#participe').click(function () {
         });
 });
 
-$('#dontParticipe').click(function () {
+$('.dontParticipe').click(function () {
     var send = {
         participant: 0,
         id_activite: $('#idActivity').html()
