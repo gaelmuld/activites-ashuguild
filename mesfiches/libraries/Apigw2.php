@@ -42,8 +42,19 @@ class Apigw2{
         return $this->getResult($url); 
         
     }
-    public function getMembreNameAccount($apiKey){
+    public function getMembreAccount($apiKey){
         $url='https://api.guildwars2.com/v2/account?access_token='.$apiKey;
        return $this->getResult($url); 
+    }
+    
+    
+    public function verifInGuild($name){
+        $membres = $this->getMembresGuild();
+        foreach($membres as $member){
+            if($name == $member['name']){
+                return true;
+            }           
+        }
+        return false;
     }
 }
