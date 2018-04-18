@@ -1,3 +1,10 @@
+@keyframes flash {
+  0% {
+    opacity: 0; }
+  10% {
+    opacity: 0.2; }
+  100% {
+    opacity: 0; } }
 body h1 {
   color: red;
   font-weight: bold;
@@ -21,7 +28,7 @@ body .message-alert {
   left: 200px;
   font-size: 1.6em;
   border-radius: 5px;
-  box-shadow: 0 3px 4px -1px #898989; }
+  box-shadow: 0 3px 4px -1px #727272; }
   body .message-alert.error {
     background-color: white;
     color: #880000;
@@ -30,90 +37,91 @@ body .message-alert {
     background-color: white;
     color: #008810;
     z-index: 2; }
-body section h2 {
+body .disabled {
+  cursor: not-allowed; }
+  body .disabled:hover {
+    color: #8c939b !important; }
+body .float-l {
+  float: left; }
+
+section > div {
+  display: flex;
+  flex-wrap: wrap; }
+section h2 {
+  color: #242424;
   text-align: center;
   padding: 10px;
   border-bottom: 1px solid #242424;
-  box-shadow: 0px 2px 30px grey; }
-  body section h2 span.encours {
-    font-weight: bold;
-    color: #a9f792;
-    text-shadow: 3px 0 5px #a9f792; }
-  body section h2 span.fini {
-    font-weight: bold;
-    color: red;
-    text-shadow: 3px 0 5px red; }
-  body section h2 span.enprepa {
-    font-weight: bold;
-    color: rgba(216, 116, 0, 0.69);
-    text-shadow: 3px 0 5px rgba(216, 116, 0, 0.69); }
-  body section h2 span.normal {
-    font-weight: bold;
-    color: #898989;
-    text-shadow: 0 0 1px #898989; }
-body section > div {
-  display: flex;
-  flex-wrap: wrap; }
-body section .description {
+  box-shadow: 0px 15px 20px -15px grey;
+  font-weight: bold; }
+  section h2 span {
+    font-style: italic;
+    color: #727272; }
+section .description {
   display: block;
-  width: 90%;
-  max-width: 1460px;
-  margin: auto; }
-  body section .description h4 p {
+  margin: 0 20px; }
+  section .description h4 {
+    font-size: 1.3rem;
     width: 180px;
-    text-align: center;
-    position: relative;
-    left: -30%;
+    padding-left: 25px;
+    text-align: justify;
     border-bottom: 2px solid #242424; }
-  body section .description p {
+  section .description #descriptionActivity h1,
+  section .description #descriptionActivity h2,
+  section .description #descriptionActivity h3,
+  section .description #descriptionActivity h4,
+  section .description #descriptionActivity h5 {
+    font-size: 1rem;
+    width: auto;
+    padding-left: 0;
+    text-align: justify;
+    border-bottom: 1px solid #242424; }
+  section .description #descriptionActivity p {
     padding: 0 5px;
-    font-size: 1.3em;
+    font-size: 1rem;
     text-align: justify;
     width: 100%;
     margin: auto; }
-    body section .description p:after {
-      content: " ";
-      display: block;
-      width: 100%;
-      height: 0px;
-      visibility: hidden;
-      opacity: 0;
-      clear: both; }
+  section .description #descriptionActivity:after {
+    content: " ";
+    display: block;
+    width: 100%;
+    height: 0px;
+    visibility: hidden;
+    opacity: 0;
+    clear: both; }
   @media screen and (max-width: 640px) {
-    body section .description img.img-thumbnail {
+    section .description img.img-thumbnail {
       width: 100%;
       max-width: 640px; } }
-  body section .description img {
+  section .description img {
     margin: 5px 20px 0 0;
     flex: 1 1 360px;
     max-width: 360px;
     height: auto; }
-body section .regle,
-body section .duree,
-body section .prerequis,
-body section .overview {
+section .regle,
+section .duree,
+section .prerequis {
   position: relative;
   overflow: hidden;
-  flex: 1 1 500px;
-  padding: 20px 30px;
+  flex: 1 1 450px;
+  padding: 10px;
   margin: 20px;
+  text-align: justify;
   border: 1px solid #b1b1b1;
   box-shadow: 0px 1px 0px #242424;
   border-radius: 6px;
-  align-self: center;
   min-height: 220px;
   transition: all 0.4s;
   cursor: default; }
-  body section .regle:hover,
-  body section .duree:hover,
-  body section .prerequis:hover,
-  body section .overview:hover {
-    box-shadow: 0 17px 10px -7px #898989;
-    transform: scale(1.025); }
-  body section .regle:before,
-  body section .duree:before,
-  body section .prerequis:before,
-  body section .overview:before {
+  section .regle:hover,
+  section .duree:hover,
+  section .prerequis:hover {
+    box-shadow: 0 6px 7px -5px #727272;
+    transform: scale(1.012); }
+  section .regle:before,
+  section .duree:before,
+  section .prerequis:before {
     position: absolute;
     top: 0;
     left: 0;
@@ -123,16 +131,14 @@ body section .overview {
     background-size: cover;
     background-position: left;
     transition: all 0.4s;
-    transform: scale(1.025); }
-  body section .regle:hover:before,
-  body section .duree:hover:before,
-  body section .prerequis:hover:before,
-  body section .overview:hover:before {
+    transform: scale(1.012); }
+  section .regle:hover:before,
+  section .duree:hover:before,
+  section .prerequis:hover:before {
     transform: scale(1); }
-  body section .regle:after,
-  body section .duree:after,
-  body section .prerequis:after,
-  body section .overview:after {
+  section .regle:after,
+  section .duree:after,
+  section .prerequis:after {
     position: absolute;
     top: 0;
     left: 0;
@@ -141,134 +147,124 @@ body section .overview {
     min-height: 100%;
     opacity: .4;
     background-color: #fff;
-    transition: all 0.6s; }
-  body section .regle:hover:after,
-  body section .duree:hover:after,
-  body section .prerequis:hover:after,
-  body section .overview:hover:after {
+    transition: all 0.4s; }
+  section .regle:hover:after,
+  section .duree:hover:after,
+  section .prerequis:hover:after {
     opacity: .8; }
-  body section .regle h5,
-  body section .duree h5,
-  body section .prerequis h5,
-  body section .overview h5 {
-    font-size: 1.5em;
+  section .regle h5,
+  section .duree h5,
+  section .prerequis h5 {
+    font-size: 1.7rem;
     font-style: italic;
     position: relative;
     z-index: 1; }
-  body section .regle p,
-  body section .regle ul,
-  body section .regle ol,
-  body section .duree p,
-  body section .duree ul,
-  body section .duree ol,
-  body section .prerequis p,
-  body section .prerequis ul,
-  body section .prerequis ol,
-  body section .overview p,
-  body section .overview ul,
-  body section .overview ol {
+  section .regle p,
+  section .regle ul,
+  section .regle ol,
+  section .duree p,
+  section .duree ul,
+  section .duree ol,
+  section .prerequis p,
+  section .prerequis ul,
+  section .prerequis ol {
     padding-left: 30px;
     margin-left: 0;
     position: relative;
     z-index: 1;
     width: 80%; }
-body section .regle:before {
-  background-image: url(../img/2f4542017-02_LWS3_Ep4_HomeBanner_Blank.jpg); }
-body section .regle h5 {
-  color: #26850a; }
-body section .duree:before {
-  background-image: url(../img/a256d2017-05_LWS3_Ep5_HomeBanner.jpg); }
-body section .duree h5 {
-  color: #007b92; }
-body section .prerequis:before {
-  background-image: url(../img/cf4492017-06_Competitve_SummerUpdate_HB_Blank.jpg); }
-body section .prerequis h5 {
-  color: #990000; }
-body section section.selection {
-  width: 98%;
-  margin: auto;
-  display: flex;
-  justify-content: flex-start;
-  flex-wrap: wrap; }
-  body section section.selection .overview {
-    position: relative;
-    flex: 1 1 280px;
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
-    transition: all 0.6s;
-    text-align: center;
-    min-width: 280px;
-    max-width: 280px;
-    cursor: pointer; }
-    @media screen and (max-width: 680px) {
-      body section section.selection .overview {
-        width: 85%;
-        flex: 1 1 85%;
-        min-width: none;
-        max-width: none; } }
-    body section section.selection .overview.finished::after {
-      opacity: .66;
-      background-color: black; }
-    body section section.selection .overview.finished {
-      transform: scale(1);
+  @media screen and (max-width: 640px) {
+    section .regle,
+    section .duree,
+    section .prerequis {
       box-shadow: none;
-      cursor: help; }
-    body section section.selection .overview.finished h5 {
-      opacity: .5; }
-    body section section.selection .overview h5 {
-      color: #eaeaea;
-      text-shadow: 0 0 5px #242424;
-      background-color: rgba(10, 10, 10, 0.6);
-      position: absolute;
-      width: 100%;
-      left: 0;
-      top: -5px;
-      padding: 20px 0;
-      width: 100%; }
-    body section section.selection .overview:after {
-      opacity: 0.1; }
-    body section section.selection .overview:nth-child(even) {
-      flex: 2 2 200px; }
-    body section section.selection .overview.created h5:before {
-      content: "my";
-      font-size: 0.4em;
-      vertical-align: top;
-      color: #a9f792; }
-body section#participants {
+      font-size: 1rem; }
+      section .regle:hover,
+      section .duree:hover,
+      section .prerequis:hover {
+        box-shadow: none;
+        transform: none; }
+      section .regle:before,
+      section .duree:before,
+      section .prerequis:before {
+        position: absolute;
+        top: 0;
+        left: 0;
+        content: " ";
+        min-width: 100%;
+        min-height: 100%;
+        background-size: cover;
+        background-position: center;
+        transition: none;
+        transform: none; }
+      section .regle:hover:before,
+      section .duree:hover:before,
+      section .prerequis:hover:before {
+        transform: none; }
+      section .regle:after,
+      section .duree:after,
+      section .prerequis:after {
+        position: absolute;
+        top: 0;
+        left: 0;
+        content: " ";
+        min-width: 100%;
+        min-height: 100%;
+        opacity: .85;
+        background-color: #fff;
+        transition: none; }
+      section .regle:hover:after,
+      section .duree:hover:after,
+      section .prerequis:hover:after {
+        opacity: .85; } }
+section .regle:before {
+  background-image: url(../img/2f4542017-02_LWS3_Ep4_HomeBanner_Blank.jpg); }
+section .regle h5 {
+  color: #26850a; }
+section .duree:before {
+  background-image: url(../img/a256d2017-05_LWS3_Ep5_HomeBanner.jpg); }
+section .duree h5 {
+  color: #007b92; }
+section .prerequis:before {
+  background-image: url(../img/cf4492017-06_Competitve_SummerUpdate_HB_Blank.jpg); }
+section .prerequis h5 {
+  color: #990000; }
+section#participants {
   margin-bottom: 130px; }
-body section form {
+section form {
   margin: 20px auto 0; }
-  body section form > * {
+  section form > * {
     display: inline-block; }
-body .disabled {
-  cursor: not-allowed; }
-  body .disabled:hover {
-    color: #8c939b !important; }
-body .float-l {
-  float: left; }
-body #action {
+section#action {
   position: fixed;
   z-index: 100;
   bottom: 20px;
   right: 10px;
   padding: 0 10px;
   border-radius: 8px; }
-  body #action button {
+  section#action button {
     font-size: 95%;
     display: block;
     width: 100%;
     margin: 10px 0;
     box-shadow: 2px 2px 3px #212121; }
-    body #action button:active {
+    section#action button:active {
       box-shadow: -1px 0px 3px #212121; }
+    section#action button.btn-round {
+      font-size: 1rem;
+      width: 40px;
+      height: 40px;
+      margin-top: 15px;
+      margin-bottom: 0px;
+      margin-right: 0px;
+      border-radius: 50%; }
 
 @media screen and (max-width: 768px) {
   section#ListeJoueurs .panelJoueur {
     height: 180px;
     overflow: hidden;
     overflow-y: scroll;
-    box-shadow: 0 3px 6px -2px #bcbcbc; } }
+    box-shadow: 0 3px 6px -2px #a5a5a5; } }
 section#ListeJoueurs .panelJoueur .list-group-item-action div:first-of-type {
   padding-left: 20px;
   text-align: left;
@@ -285,5 +281,99 @@ section#ListeJoueurs .panelJoueur .list-group-item-action div:last-of-type {
   display: inline-block; }
 section#ListeJoueurs .panelJoueur .list-group-item-action:hover div:last-of-type {
   opacity: 1; }
+
+section.selection {
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap; }
+  section.selection .overview {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-radius: 6px;
+    box-shadow: 0px 2px 4px -2px #242424;
+    cursor: pointer;
+    flex: 0 0 272px;
+    height: 180px;
+    margin: 10px 20px;
+    max-width: 272px;
+    min-width: 272px;
+    overflow: hidden;
+    position: relative;
+    transition: all 0.4s;
+    text-align: center; }
+    section.selection .overview:hover {
+      box-shadow: 0 12px 7px -5px #727272;
+      transform: scale(1.02); }
+    section.selection .overview:after {
+      opacity: 0.1;
+      position: absolute;
+      top: 0;
+      left: 0;
+      content: " ";
+      min-width: 100%;
+      min-height: 100%;
+      background-color: #fff;
+      opacity: 0;
+      transition: all 0.6s; }
+    section.selection .overview:not(.finished):hover:after {
+      animation-name: flash;
+      animation-duration: .3s;
+      animation-timing-function: ease-in; }
+    section.selection .overview.created h3:before {
+      content: "my";
+      font-size: 0.4em;
+      vertical-align: top;
+      color: #a9f792; }
+    section.selection .overview.finished {
+      transform: scale(1);
+      box-shadow: none;
+      cursor: help; }
+    section.selection .overview.finished:after {
+      opacity: .66;
+      background-color: black; }
+    section.selection .overview.finished:hover:after {
+      opacity: .66;
+      background-color: black; }
+    section.selection .overview.finished h5 {
+      opacity: .5;
+      font-size: 0.5 rem; }
+    @media screen and (max-width: 640px) {
+      section.selection .overview {
+        height: 50vw;
+        min-height: 200px;
+        flex: 1 1 85%;
+        max-width: none;
+        transition: none;
+        transform: scale(1);
+        box-shadow: none; }
+        section.selection .overview:after {
+          background-color: #fff;
+          opacity: 0; }
+        section.selection .overview:hover {
+          transform: scale(1);
+          box-shadow: none; }
+          section.selection .overview:hover:after {
+            opacity: 0; }
+        section.selection .overview:not(.finished):hover:after {
+          animation: none; }
+        section.selection .overview.finished {
+          transform: scale(1);
+          max-width: 75%;
+          height: 40vw;
+          margin: 3px 12px; }
+          section.selection .overview.finished:hover {
+            transform: scale(1); } }
+    section.selection .overview h3 {
+      color: #eaeaea;
+      text-shadow: 0 0 5px #242424;
+      background-color: rgba(10, 10, 10, 0.6);
+      position: absolute;
+      width: 100%;
+      left: 0;
+      top: -5px;
+      padding: 20px 0;
+      width: 100%;
+      font-size: 1.3rem; }
 
 /*# sourceMappingURL=stylise.css.map */

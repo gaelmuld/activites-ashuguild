@@ -14,9 +14,9 @@
         <?=(@$activite['createur'] === $_SESSION['id'])?'created':'' //createur ou non?>
         overview active" style="background-image:url(
         <?=$activite['imgDescription'] ?>);>">
-            <h5>
+            <h3>
                 <?= $activite['titre']?>
-            </h5>
+            </h3>
         </a>
         <?php } ?>
     </section>

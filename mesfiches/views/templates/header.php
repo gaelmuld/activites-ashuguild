@@ -23,8 +23,14 @@
 </head>
 
 <?php 
+<<<<<<< HEAD
 var_dump("session : ",$_SESSION);
 var_dump("post : ",$_POST);
 var_dump("joueurs : ",@$joueurs);
+=======
+//var_dump("session : ",$_SESSION); 
+//var_dump("post : ",$_POST); 
+//var_dump("joueurs : ",@$joueurs);
+>>>>>>> 828e7c0cee19dc3128e475ca58aec2d52ac8b71f
 
 ?>
