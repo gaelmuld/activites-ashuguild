@@ -41,7 +41,7 @@
         </div>
     </div>
 </section>
-<?php if(isset($activite['dateFin']) && $activite['dateFin'] > date('Y-m-d')){ ?>
+<?php if(@$activite['dateFin'] > date('Y-m-d') && $_SESSION['rang']>1){ ?>
 <section id="action" class="text-center">
     <button class="btn btn-success text-center" id="participe">Je participe</button>
     <button class="btn btn-warning text-center" id="dontParticipe">Je ne participe pas</button>

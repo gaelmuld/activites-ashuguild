@@ -62,15 +62,22 @@ class Control extends CI_Controller {
             $result=$query->result_array();
             if($result){
                 $result=$result[0];
+                
+                $inGuild = $this->apigw2->verifInGuild($result['compte']);
                 $newdata=array(
                     'pseudo'=>$result['pseudo'],
                     'rangId'=>$result['rangId'],
                     'id'=>$result['id'],
                     'rang'=>$this->M_dachis->getRank($result['rangId'])['niveau']
                 );
+                if(!$inGuild){
+                    $this->m_db->updateRang($result['id'],7);
+                    $newdata['rang']=7;
+                }
                 $this->session->set_userdata($newdata);
                 $message='Connexion réussie';
                 $this->session->set_flashdata('message', $message);
+                
                 header('Location:'.base_url().'control/selection');
                 
             }else{
@@ -85,9 +92,9 @@ class Control extends CI_Controller {
         \****************************/
         
         if(isset($_POST['creation'])){
-            
+                   
             $infoCreate['apiGw2'] = $_POST['apiKey'];
-            $accountGw2 = $this->apigw2->getMembreNameAccount($infoCreate['apiGw2']);
+            $accountGw2 = $this->apigw2->getMembreAccount($infoCreate['apiGw2']);
                 if(!$accountGw2){
                 /*********************\
                 |**si api incorrecte**|
@@ -104,13 +111,27 @@ class Control extends CI_Controller {
                 |**Si nouvel inscrit**|
                 \*********************/
                 
+            
+                /***********************************************\
+                |**faut appartenir à la guilde pour s'inscrire**|
+                \***********************************************/
+                $inGuild = $this->apigw2->verifInGuild($accountGw2['name']);
+                
+                if(!$inGuild){
+                   
+                    $data['message'] ='faut être dans la Ashuguilde. Club privé!!';
+                    $this->session->set_flashdata('message', $data['message']);
+                    header('Location:'.base_url());
+                    return ;
+                }
                 $this->db->insert($table,$infoCreate);
-                $data['message'] ='Bienvenu, cher Dachi';
+                $data['message'] ='Bienvenu, chez les dachis. '.$infoCreate['pseudo'];
                 $this->session->set_flashdata('message', $data['message']);
+                
                 header('Location:'.base_url());
                 return ;
             }
-            if($result){
+            else{
                 /****************************\
                 |**Les autres cas possibles**|
                 \****************************/
@@ -194,11 +215,12 @@ class Control extends CI_Controller {
                         /**********************************\
                         |**Tout est identique->Connection**|
                         \**********************************/
+                        
                         $newdata=array(
                             'pseudo'=>$result['pseudo'],
                             'rangId'=>$result['rangId'],
                             'id'=>$result['id'],
-                            'rang'=>$this->m_dachis->getRank($result['rangId'])['niveau']
+                            'rang'=>$this->M_dachis->getRank($result['rangId'])['niveau']
                             );
                         $this->session->set_userdata($newdata);
                         $message='Connexion réussie';
@@ -223,7 +245,7 @@ class Control extends CI_Controller {
         /**********************\
         |**verifie la session**|
         \**********************/
-        if(!$_SESSION['rang']){
+        if(!$_SESSION['rangId']){
            header('Location:'.base_url()); 
         }
     }
@@ -352,30 +374,35 @@ class Control extends CI_Controller {
                 header('Location:'.base_url().'control/selection');  
             }
     
-        $membres = $this->apigw2->getMembresGuild();
+        $membres = $this->apigw2->getMembresGuild(); //reçu de l'api
         
         $this->db->order_by('rang','DESC');
         $joueurs= $this->M_dachis->getDachis();
         $countActivites= $this->M_dachis->getCreationCount();
         $countParticipations= $this->M_dachis->getParticipationCount();
-        foreach($countActivites as $countAct){
+            
+        /*********************************************************************************\
+        |**reconstruction des tableau pour facilité l'incrustation dans le tableau final**|
+        \*********************************************************************************/
+        foreach($countActivites as $countAct){//decompte des activités créées
             $countActs[$countAct['id']]=$countAct['nbCreation'];
         }            
             
-        foreach($countParticipations as $countPart){   
+        foreach($countParticipations as $countPart){//décompte des participations/refus
             $countParts[$countPart['id']][$countPart['participe']]=0+$countPart['nbParticipe'];
         } 
-             
-        foreach($countActivites as $countAct){
-            $countActs[$countAct['id']]=$countAct['nbCreation'];
-        }
-        foreach($joueurs as $k=>$joueur){
+            
+        foreach($joueurs as $k=>$joueur){// infos reçu de l'
             foreach($membres as $member){
                 if($joueur['compte'] == $member['name']){
                     $joueurs[$k]['joined']=date('d/m/Y',strtotime($member['joined']));
                     $joueurs[$k]['rankGuild']=$member['rank'];
                     break;
+                }else{
+                $joueurs[$k]['joined']='Not in Guild';
+                $joueurs[$k]['rankGuild']='Not in Guild';
                 }
+                
             }
             $joueurs[$k]['countCreaAct']=$countActs[$joueur['id']];
             $joueurs[$k]['countParticipation']=array(

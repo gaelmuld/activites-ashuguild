@@ -27,7 +27,4 @@ class M_dachis extends CI_Model {
     public function getCreationCount(){
         return $this->db->query('SELECT dachis.id,COUNT(activites.createur) as nbCreation FROM dachis INNER JOIN rangs ON rangId=rangs.id LEFT JOIN activites ON dachis.id = activites.createur GROUP BY dachis.id ORDER BY dachis.compte')->result_array();
     }
-    
-
-
 }
